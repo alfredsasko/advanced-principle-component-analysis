@@ -7,17 +7,12 @@ Iplemented customizations
   for selecting significant features
 - 'surrogate' feature selection used for dimensionality reduction -
   features with maximum laoding instead of principal components are selected
-- ...
 """
 
 # IMPORTS
 # -------
 
 # Standard libraries
-
-import ipdb
-from inspect import isclass
-from inspect import currentframe
 import numbers
 
 
@@ -59,7 +54,7 @@ import seaborn as sns
 class CustomPCA(PCA):
     '''Customized PCA with following options
        - varimax rotation
-       - diffrent feature selection methods
+       - different feature selection methods
 
        and calculated communalities.
     '''
@@ -73,11 +68,13 @@ class CustomPCA(PCA):
         feature_selection: string, Features selection method
                            'all': All features are selected, means principal
                                   components are output of tranformation
+                           'significant': Only features with significant weights
+                                          and communalities are selected
                            'surrogate': Only features with highest loading
                                         with principal components are used
                            'summated scales': Summated scales consturcted as
                                               sum of features having significant
-                                              loadings onn principal components,
+                                              loadings on principal components,
                                               not implemented yet.
         '''
 
@@ -85,7 +82,7 @@ class CustomPCA(PCA):
         self.rotation = rotation
         self.feature_selection = feature_selection
 
-
+    @staticmethod
     def _df2mtr(self, df):
         '''Convert pandas dataframe to r matrix. Category dtype is casted as
         factorVector considering missing values
@@ -360,12 +357,12 @@ class CustomPCA(PCA):
         # and communality > 0.5
         significant_features_mask = (
             ((np.absolute(self.components_)
-              >= self.significance_threshold())
+              >= self.calculate_significance_threshold())
              .any(axis=0))
             & (self.communalities_ >= 0.5)
         )
 
-        if self.feature_selection == 'all':
+        if self.feature_selection == 'significant':
             mask = significant_features_mask
 
         elif self.feature_selection == 'surrogate':
@@ -384,7 +381,8 @@ class CustomPCA(PCA):
             raise ValueError('Not valid selection method.')
         return mask
 
-    def significance_threshold(self):
+
+    def calculate_significance_threshold(self):
         sample_sizes = np.array([50, 60, 70, 85, 100,
                                  120, 150, 200, 250, 300])
         thresholds = np.array([0.75, 0.70, 0.65, 0.60, 0.55,
