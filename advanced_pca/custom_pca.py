@@ -83,7 +83,7 @@ class CustomPCA(PCA):
         self.feature_selection = feature_selection
 
     @staticmethod
-    def _df2mtr(self, df):
+    def _df2mtr(df):
         '''Convert pandas dataframe to r matrix. Category dtype is casted as
         factorVector considering missing values
         (original py2ri function of rpy2 can't handle this properly so far)
@@ -239,12 +239,7 @@ class CustomPCA(PCA):
             U, S, V = None, None, None
 
         # implmentation of communalties
-        self.communalities_ = (
-            ((self.components_.T
-              * (self.explained_variance_.reshape(1, -1) ** (1/2)))
-             ** 2)
-            .sum(axis=1)
-        )
+        self.communalities_ = (self.components_ ** 2).sum(axis=0)
 
         return U, S, V
 
@@ -362,7 +357,10 @@ class CustomPCA(PCA):
             & (self.communalities_ >= 0.5)
         )
 
-        if self.feature_selection == 'significant':
+        if self.feature_selection == 'all':
+            mask = np.array([True] * self.n_features_)
+
+        elif self.feature_selection == 'significant':
             mask = significant_features_mask
 
         elif self.feature_selection == 'surrogate':
@@ -377,6 +375,7 @@ class CustomPCA(PCA):
 
         elif self.feature_selection == 'summated scales':
             raise Exception('Not implemented yet.')
+
         else:
             raise ValueError('Not valid selection method.')
         return mask
@@ -455,3 +454,10 @@ class CustomPCA(PCA):
         X_transformed = self.transform(X)
 
         return X_transformed
+
+    def count_cross_loadings(self):
+        '''Calculates number of cross loadings'''
+        is_significant = (np.absolute(self.components_)
+                          > self.calculate_significance_threshold())
+        count = is_significant.sum()
+        return count
