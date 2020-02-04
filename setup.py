@@ -2,7 +2,9 @@ from setuptools import setup
 from os import path
 
 PROJECT_URLS = {
-    'Source Code': 'https://github.com/scikit-learn/scikit-learn'
+    'Source Code': 'https://github.com/alfredsasko/' \
+                   'advanced-principle-component-analysis',
+    'Documentation': 'https://pypi.org/project/advanced-pca/#description'
 }
 
 
