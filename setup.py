@@ -1,6 +1,11 @@
 from setuptools import setup
 from os import path
 
+PROJECT_URLS = {
+    'Source Code': 'https://github.com/scikit-learn/scikit-learn'
+}
+
+
 # read the contents of your README file
 __file__ = 'C:/Users/Fredo/Google Drive/Knowledge Center/' \
            'Data Scientist Nanodegree/pr-pypi-package/README.md'
@@ -11,7 +16,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
   name = 'advanced_pca',
   packages = ['advanced_pca'],
-  version = '0.1',
+  version = '0.1.0',
   license='MIT',
   description = 'PCA with varimax rotation and feature selection '  \
                 'compatible with scikit-learn',
@@ -20,6 +25,7 @@ setup(
   author = 'Alfred Sasko',
   author_email = 'alfred.sasko@gmail.com',
   url = 'https://github.com/alfredsasko',
+  project_urls=PROJECT_URLS,
   keywords = ['Principle Component Analysis',
               'Matrix rotation',
               'Feature selection',
