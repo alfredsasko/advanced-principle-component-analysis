@@ -141,4 +141,4 @@ There are additional files:
 ## Licensing, Authors, Acknowledgements<a name="licensing"></a>
 
 Must give credit to [Joseph F. Hair Jr, William C. Black, Barry J. Babin, Rolph E. Anderson](https://www.amazon.com/Multivariate-Data-Analysis-Joseph-Hair/dp/0138132631).
-The ones using projects shall follow [MIT lincence](https://github.com/alfredsasko/advanced-principle-component-analysis/blob/master/license.txt)
+The ones using projects shall follow [MIT lincence](https://github.com/alfredsasko/advanced-principle-component-analysis/blob/master/advanced_pca/license.txt)
