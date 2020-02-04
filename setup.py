@@ -16,7 +16,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
   name = 'advanced_pca',
   packages = ['advanced_pca'],
-  version = '0.1.0',
+  version = '0.1.1',
   license='MIT',
   description = 'PCA with varimax rotation and feature selection '  \
                 'compatible with scikit-learn',
