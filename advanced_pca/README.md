@@ -128,7 +128,7 @@ There are several necessary 3rd party libraries beyond the Anaconda distribution
  - [rpy2](https://pypi.org/project/rpy2/) Python interface to the R language used to calculate the varimax rotation
 
 ```
-pip install custom-pca
+pip install advanced-pca
 ```
 
 ## File Descriptions <a name="files"></a>
