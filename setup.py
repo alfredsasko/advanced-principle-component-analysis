@@ -1,3 +1,6 @@
+import base64
+import requests
+
 from setuptools import setup
 from os import path
 
@@ -9,16 +12,22 @@ PROJECT_URLS = {
 
 
 # read the contents of your README file
-__file__ = 'C:/Users/Fredo/Google Drive/Knowledge Center/' \
-           'Data Scientist Nanodegree/pr-pypi-package/README.md'
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+readme_url = ('https://api.github.com/repos/alfredsasko/'
+              'advanced-principle-component-analysis/contents/README.md')
+
+req = requests.get(readme_url)
+if req.status_code == requests.codes.ok:
+    req = req.json()
+    long_description = base64.b64decode(req['content']).decode('u8')
+else:
+    long_description = 'Long Description Source File Not Found'
+
+print(type(long_description))
 
 setup(
   name = 'advanced_pca',
   packages = ['advanced_pca'],
-  version = '0.1.1',
+  version = '0.1.4',
   license='MIT',
   description = 'PCA with varimax rotation and feature selection '  \
                 'compatible with scikit-learn',
